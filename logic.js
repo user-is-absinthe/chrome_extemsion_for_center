@@ -49,7 +49,7 @@ function pageLoadFunction() {
 
 
 function loadDataIntoTableFunction() {
-    alert("123")
+    // alert("123")
 }
 
 
