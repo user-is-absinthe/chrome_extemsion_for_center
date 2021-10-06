@@ -1,72 +1,101 @@
-// функция по добавлению строки
-function createRowFunction() {
-    // loadDataIntoTableFunction();
-    if (document.getElementById("myTable").rows.length < 16) {
-        let table = document.getElementById("myTable");
-        let row = table.insertRow(-1);
-        let cell_1 = row.insertCell(0);
-        let cell_2 = row.insertCell(1);
-        let cell_3 = row.insertCell(1)
-        cell_1.innerHTML = "NEW CELL 1";
-        cell_2.innerHTML = "NEW CELL 2";
-        cell_3.innerHTML = "NEW CELL 3";
-    }
-    saveTableFunction()
-}
 // штука, которая ждет нажатие на кнопочку, чтобы вызвать фугкцию
 document.addEventListener('DOMContentLoaded', function () {
-    document.getElementById("click-add-row").addEventListener("click", createRowFunction);
+    document.getElementById("click-save").addEventListener("click", GetAAllTabs);
 });
 
 
-// функция удаления строки
-function deleteRowFunction() {
-    if (document.getElementById("myTable").rows.length !== 1) {
-        document.getElementById("myTable").deleteRow(-1);
-    }
-    // saveTableFunction()
-}
-// слушатель функции удаления строки
-document.addEventListener('DOMContentLoaded', function () {
-    document.getElementById("click-delete-row").addEventListener("click", deleteRowFunction);
-});
+// получаем все вкладки
+function GetAAllTabs() {
+    // chrome.tabs.query({ active: true, currentWindow: true }, function (tab) {
+    // // chrome.tabs.query({ active: true }, function (tab) {
+    // // chrome.tabs.query(null, function (tab) {
+    //     // do some other fanciful stuff here
+    //     // for (let my_tab in tab) {
+    //     //     alert(my_tab)
+    //     //     // console.log(my_tab)
+    //     // }
+    //
+    //     // let title = tab[1].title;
+    //     // alert(title)
+    //
+    //     // while (true) {
+    //     //
+    //     // }
+    //
+    //
+    //     let string = [];
+    //     for (let i = 0; i < tab.length; i++) {
+    //         string.push(i);
+    //         string.push(tab[i].title)
+    //     }
+    //     alert(string)
+    //
+    // });
 
 
-// <---------------------------stable functions end here---------------------------------->
+    // chrome.windows.getAll({}, function (window) {
+    //     alert(window.tab);
+    // });
+
+    // chrome.tabs.getSelected(null, function(tab) { // null defaults to current window
+    //
+    //     let title = tab.title;
+    //
+    //     alert(title);
+    //
+    // });
 
 
-// // слушатель функции сохранения
-// // document.addEventListener('DOMContentLoaded', function () {
-// //     document.getElementById("click-save-table").addEventListener("click", saveTableFunction);
-// // });
+    // chrome.tabs.getAllInWindow(null, function (tab) {
+    //     let string = [];
+    //     for (let i = 0; i < tab.length; i++) {
+    //         // string.push(i);
+    //         string.push([i + 1, tab[i].title])
+    //     }
+    //
+    //     alert(string);
+    //
+    //     let table = document.getElementById("myTable");
+    //
+    //     let row = table.insertRow(-1);
+    //     let cell_1 = row.insertCell(0);
+    //     let cell_2 = row.insertCell(1);
+    //
+    //     cell_1.innerHTML = "NEW CELL 1";
+    //     cell_2.innerHTML = "NEW CELL 2";
+    //
+    // });
 
 
-document.addEventListener("DOMContentLoaded", pageLoadFunction);
-function pageLoadFunction() {
-    alert("loaded");
-    loadDataIntoTableFunction()
-}
+    chrome.tabs.getAllInWindow(null, function (tab) {
+
+        let table = document.getElementById("myTable");
+
+        for (let i = 0; i < tab.length; i++) {
+
+            let row = table.insertRow(-1);
+            let cell_1 = row.insertCell(0);
+            // let cell_2 = row.insertCell(1);
+
+            cell_1.innerHTML = tab[i].title;
+            // cell_2.innerHTML = tab[i].title;
+
+        }
+
+        // alert(string);
 
 
-function loadDataIntoTableFunction() {
-    // alert("123")
-}
+        //
+        // let row = table.insertRow(-1);
+        // let cell_1 = row.insertCell(0);
+        // let cell_2 = row.insertCell(1);
+        //
+        // cell_1.innerHTML = "NEW CELL 1";
+        // cell_2.innerHTML = "NEW CELL 2";
 
-
-
-function saveTableFunction() {
-    let table = document.getElementById("myTable")
-    chrome.storage.local.set({'saved_table': table})
-    alert("saved")
-}
-
-
-function loadTabFunction() {
-    chrome.storage.local.get(["saved_table"], function (load_table) {
-        // document.getElementById("myTable") = load_table
-        let table = load_table.saved_table
     });
-    // let table = document
-    return table
+
 }
+
+
 
